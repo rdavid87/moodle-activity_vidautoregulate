@@ -110,8 +110,8 @@ $video=$query['v'];
       videoId: '<?php echo $video;?>',
 	  events: {
            'onReady': onPlayerStateChange,
-            'onStateChange': onPlayerStateChange
-            'onPlaybackQualityChange' : onPlayerStateChange,
+            'onStateChange': onPlayerStateChange,
+            'onPlaybackQualityChange' : onPlaybackQuality,
            'onPlaybackRateChange' : onPlayerStateChange 
           }
 
@@ -125,12 +125,36 @@ $video=$query['v'];
 	   var video=<?php echo $vidtrack->id;?>;
 	   var xhttp;
 	   var state=event.data;
+	   var jsondata = '{"calidad":"'+event.target.getPlaybackQuality()+'", "tiempo":"'+event.target.getCurrentTime()+'", "duracion":"'+event.target.getDuration()+'", "url":"'+event.target.getVideoUrl()+'", "velocidad":"'+event.target.getAvailablePlaybackRates()+'"}'
+		jsondata=123;//URLEncoder.encode(jsondata, "UTF-8");
+	   console.log(event);
 	   //document.getElementById("demo").innerHTML="State changed "+event.data+player.getVideoUrl()+player.getCurrentTime()+" "+course;
 		
 	   xhttp = new XMLHttpRequest();
-	   xhttp.open("GET", "add_data.php?state="+state+"&course="+course+"&user="+user+"&video="+video, true);
+	   xhttp.open("GET", "add_data.php?state="+state+"&course="+course+"&user="+user+"&video="+video+"&jsondata="+jsondata, true);
 	   xhttp.send();
   }
+  function onPlaybackQuality(event){
+        console.log("CALIDAD: "+event.target.getPlaybackQuality());
+		console.log("TIEMPO: "+event.target.getCurrentTime());
+		console.log("DURACION: "+event.target.getDuration());
+		console.log("URL VIDEO: "+event.target.getVideoUrl());
+		console.log("VELOCIDAD VIDEO: "+event.target.getAvailablePlaybackRates());
+        //console.log(event.data);
+	   var course=<?php echo $PAGE->course->id;?>;
+	   var user=<?php echo $USER->id;?>;
+	   var video=<?php echo $vidtrack->id;?>;
+	   var xhttp;
+	   var state=event.target.getPlaybackQuality();
+	   var jsondata = '{"calidad":"'+event.target.getPlaybackQuality()+'", "tiempo":"'+event.target.getCurrentTime()+'", "duracion":"'+event.target.getDuration()+'", "url":"'+event.target.getVideoUrl()+'", "velocidad":"'+event.target.getAvailablePlaybackRates()+'"}'
+	   jsondata=123;//URLEncoder.encode(jsondata, "UTF-8");
+	   //console.log(event);
+	   //document.getElementById("demo").innerHTML="State changed "+event.data+player.getVideoUrl()+player.getCurrentTime()+" "+course;
+		
+	   xhttp = new XMLHttpRequest();
+	   xhttp.open("GET", "add_data.php?state="+state+"&course="+course+"&user="+user+"&video="+video+"&jsondata="+jsondata, true);
+	   xhttp.send();
+}
 
 
 </script>
