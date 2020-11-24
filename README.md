@@ -11,3 +11,4 @@ VidTrack is a simple activity plugin for Moodle. It simply takes youtube video u
 When one of above event occurred, VidTrack store the record in a table youtube ( which is created at the time of installing plugin). This record contain student id, course id, time. This data later can be analyzed to understand student's video watching behavior.
 
 In this future release, we plan to include visual analytics in it to 
+Se va agregar tambien nuevos eventos de Youtube  Iframe API
