@@ -110,7 +110,7 @@ $video=$query['v'];
       videoId: '<?php echo $video;?>',
 	  events: {
            'onReady': onPlayerStateChange,
-            'onStateChange': onPlayerStateChange
+            'onStateChange': onPlayerStateChange,
             'onPlaybackQualityChange' : onPlayerStateChange,
            'onPlaybackRateChange' : onPlayerStateChange 
           }
