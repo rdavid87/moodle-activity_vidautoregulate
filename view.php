@@ -109,7 +109,10 @@ $video=$query['v'];
       width: '640',
       videoId: '<?php echo $video;?>',
 	  events: {
-           'onStateChange': onPlayerStateChange 
+           //'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+            //'onPlaybackQualityChange' : onPlaybackQuality,
+           // 'onPlaybackRateChange' : onPlaybackRate 
           }
 
     });
@@ -127,7 +130,8 @@ $video=$query['v'];
 	   xhttp = new XMLHttpRequest();
 	   xhttp.open("GET", "add_data.php?state="+state+"&course="+course+"&user="+user+"&video="+video, true);
 	   xhttp.send();
-  } 
+  }
+
 
 </script>
 
