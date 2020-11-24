@@ -60,7 +60,7 @@ switch($state){
 		$temp='video cued';
 		break;
 	default:
-		$temp='unrecognized state';
+		$temp=$state;//'unrecognized state';
 		break;
 	
 }
