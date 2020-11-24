@@ -109,10 +109,10 @@ $video=$query['v'];
       width: '640',
       videoId: '<?php echo $video;?>',
 	  events: {
-           //'onReady': onPlayerReady,
+           'onReady': onPlayerStateChange,
             'onStateChange': onPlayerStateChange
-            //'onPlaybackQualityChange' : onPlaybackQuality,
-           // 'onPlaybackRateChange' : onPlaybackRate 
+            'onPlaybackQualityChange' : onPlayerStateChange,
+           'onPlaybackRateChange' : onPlayerStateChange 
           }
 
     });
