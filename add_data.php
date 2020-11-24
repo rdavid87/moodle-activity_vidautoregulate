@@ -32,6 +32,7 @@ require_once(dirname(__FILE__).'/lib.php');
 			$course=$_GET['course'];
 			$video=$_GET['video'];
 			$state=$_GET['state'];
+			$jsondata=$_GET['jsondata'];
 
 
 $record=new stdClass();
@@ -39,6 +40,7 @@ $record->user=$user;
 $record->course=$course;
 $record->video=$video;
 $temp='';
+
 switch($state){
 	case -1:
 		$temp='unstarted';
@@ -64,8 +66,9 @@ switch($state){
 		break;
 	
 }
-$record->state=$temp;
+$record->state=$state;
 $record->time_occurred=date('Y-m-d H:i:s');
+$record->datos_json=$jsondata;
 $id=$DB->insert_record('youtube',$record,false);
 	
 
