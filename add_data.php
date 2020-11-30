@@ -66,12 +66,12 @@ switch($state){
 		break;
 	
 }
-$record->state=$temp;
-$record->time_occurred=date('Y-m-d H:i:s');
-$record->datos_json=$jsondata;
+//$record->state=$temp;
+//$record->time_occurred=date('Y-m-d H:i:s');
+//$record->datos_json=$jsondata;
 
-$id=$DB->insert_record('youtube',$record,false);
-
+//$id=$DB->insert_record('youtube',$record,false);
+/*
 $log_manual=new stdClass();
 $log_manual->other=$jsondata;
 $log_manual->eventname='\mod_vidtrack\event\course_module_viewed';
@@ -88,7 +88,7 @@ $log_manual->contextlevel=70;
 $log_manual->contextinstanceid=1958;
 $log_manual->userid=$user;
 $log_manual->courseid=$course;
-
+*/
 //$id = optional_param('id',0,PARAM_INT);    // Course Module ID, or
 //$cm = get_coursemodule_from_instance('vidtrack', $course, 0, false, MUST_EXIST);
 $ctx = context_course::instance($course);
