@@ -87,12 +87,12 @@ echo $OUTPUT->heading($vidtrack->name);
 //echo $PAGE->course->id."<br/>";
 //echo $USER->id."<br/>";
 //echo $vidtrack->id;
+//echo json_encode($cm).'<br/>objectid='.$PAGE->cm->instance.'<br/>context='.json_encode($course);
 $parts = parse_url($vidtrack->youtube);
 parse_str($parts['query'], $query);
 $video=$query['v'];
 ?>
 <div id="ytplayer"></div>
-<div id="demo"></div>
 <script type="text/javascript">
   // Load the IFrame Player API code asynchronously.
   var tag = document.createElement('script');
@@ -125,6 +125,7 @@ $video=$query['v'];
 	   var user=<?php echo $USER->id;?>;
 	   var video=<?php echo $vidtrack->id;?>;
 	   var xhttp;
+	   var contextinstanceid=<?php echo $cm->id;?>;
 	   var state=event.data;
 	   var jsondata = '{"evento":"onReady", "data":"'+event.data+'", "calidad":"'+event.target.getPlaybackQuality()+'", "tiempo":"'+event.target.getCurrentTime()+'", "duracion":"'+event.target.getDuration()+'", "url":"'+event.target.getVideoUrl()+'"}';
 		jsondata=JSON.stringify(jsondata);//URLEncoder.encode(jsondata, "UTF-8");
@@ -132,7 +133,7 @@ $video=$query['v'];
 	   //document.getElementById("demo").innerHTML="State changed "+event.data+player.getVideoUrl()+player.getCurrentTime()+" "+course;
 		
 	   xhttp = new XMLHttpRequest();
-	   xhttp.open("GET", "add_data.php?state="+state+"&course="+course+"&user="+user+"&video="+video+"&jsondata="+encodeURIComponent(jsondata), true);
+	   xhttp.open("GET", "add_data.php?state="+state+"&course="+course+"&user="+user+"&video="+video+"&jsondata="+encodeURIComponent(jsondata)+"&contextinstanceid="+contextinstanceid, true);
 	   xhttp.send();
   }
   function onPlayerStateChange(event) {
@@ -140,6 +141,7 @@ $video=$query['v'];
 	   var user=<?php echo $USER->id;?>;
 	   var video=<?php echo $vidtrack->id;?>;
 	   var xhttp;
+	   var contextinstanceid=<?php echo $cm->id;?>;
 	   var state=event.data;
 	   var jsondata = '{"evento":"onPlayerStateChange", "data":"'+event.data+'", "calidad":"'+event.target.getPlaybackQuality()+'", "tiempo":"'+event.target.getCurrentTime()+'", "duracion":"'+event.target.getDuration()+'", "url":"'+event.target.getVideoUrl()+'"}';
 		jsondata=JSON.stringify(jsondata);//URLEncoder.encode(jsondata, "UTF-8");
@@ -147,7 +149,7 @@ $video=$query['v'];
 	   //document.getElementById("demo").innerHTML="State changed "+event.data+player.getVideoUrl()+player.getCurrentTime()+" "+course;
 		
 	   xhttp = new XMLHttpRequest();
-	   xhttp.open("GET", "add_data.php?state="+state+"&course="+course+"&user="+user+"&video="+video+"&jsondata="+encodeURIComponent(jsondata), true);
+	   xhttp.open("GET", "add_data.php?state="+state+"&course="+course+"&user="+user+"&video="+video+"&jsondata="+encodeURIComponent(jsondata)+"&contextinstanceid="+contextinstanceid, true);
 	   xhttp.send();
   }
   function onPlayerPlaybackQualityChange(event) {
@@ -155,6 +157,7 @@ $video=$query['v'];
 	   var user=<?php echo $USER->id;?>;
 	   var video=<?php echo $vidtrack->id;?>;
 	   var xhttp;
+	   var contextinstanceid=<?php echo $cm->id;?>;
 	   var state=event.data;
 	   var jsondata = '{"evento":"onPlaybackQualityChange", "data":"'+event.data+'", "calidad":"'+event.target.getPlaybackQuality()+'", "tiempo":"'+event.target.getCurrentTime()+'", "duracion":"'+event.target.getDuration()+'", "url":"'+event.target.getVideoUrl()+'"}';
 		jsondata=JSON.stringify(jsondata);//URLEncoder.encode(jsondata, "UTF-8");
@@ -162,7 +165,7 @@ $video=$query['v'];
 	   //document.getElementById("demo").innerHTML="State changed "+event.data+player.getVideoUrl()+player.getCurrentTime()+" "+course;
 		
 	   xhttp = new XMLHttpRequest();
-	   xhttp.open("GET", "add_data.php?state="+state+"&course="+course+"&user="+user+"&video="+video+"&jsondata="+encodeURIComponent(jsondata), true);
+	   xhttp.open("GET", "add_data.php?state="+state+"&course="+course+"&user="+user+"&video="+video+"&jsondata="+encodeURIComponent(jsondata)+"&contextinstanceid="+contextinstanceid, true);
 	   xhttp.send();
   }
  function onPlayerPlaybackRateChange(event) {
@@ -170,6 +173,7 @@ $video=$query['v'];
 	   var user=<?php echo $USER->id;?>;
 	   var video=<?php echo $vidtrack->id;?>;
 	   var xhttp;
+	   var contextinstanceid=<?php echo $cm->id;?>;
 	   var state=event.data;
 	   var jsondata = '{"evento":"onPlaybackRateChange", "data":"'+event.data+'", "calidad":"'+event.target.getPlaybackQuality()+'", "tiempo":"'+event.target.getCurrentTime()+'", "duracion":"'+event.target.getDuration()+'", "url":"'+event.target.getVideoUrl()+'"}';
 		jsondata=JSON.stringify(jsondata);//URLEncoder.encode(jsondata, "UTF-8");
@@ -177,7 +181,7 @@ $video=$query['v'];
 	   //document.getElementById("demo").innerHTML="State changed "+event.data+player.getVideoUrl()+player.getCurrentTime()+" "+course;
 		
 	   xhttp = new XMLHttpRequest();
-	   xhttp.open("GET", "add_data.php?state="+state+"&course="+course+"&user="+user+"&video="+video+"&jsondata="+encodeURIComponent(jsondata), true);
+	   xhttp.open("GET", "add_data.php?state="+state+"&course="+course+"&user="+user+"&video="+video+"&jsondata="+encodeURIComponent(jsondata)+"&contextinstanceid="+contextinstanceid, true);
 	   xhttp.send();
   }
 function onPlayerError(event) {
@@ -185,6 +189,7 @@ function onPlayerError(event) {
 	   var user=<?php echo $USER->id;?>;
 	   var video=<?php echo $vidtrack->id;?>;
 	   var xhttp;
+	   var contextinstanceid=<?php echo $cm->id;?>;
 	   var state=event.data;
 	   var jsondata = '{"evento":"onError", "data":"'+event.data+'", "calidad":"'+event.target.getPlaybackQuality()+'", "tiempo":"'+event.target.getCurrentTime()+'", "duracion":"'+event.target.getDuration()+'", "url":"'+event.target.getVideoUrl()+'"}';
 		jsondata=JSON.stringify(jsondata);//URLEncoder.encode(jsondata, "UTF-8");
@@ -192,7 +197,7 @@ function onPlayerError(event) {
 	   //document.getElementById("demo").innerHTML="State changed "+event.data+player.getVideoUrl()+player.getCurrentTime()+" "+course;
 		
 	   xhttp = new XMLHttpRequest();
-	   xhttp.open("GET", "add_data.php?state="+state+"&course="+course+"&user="+user+"&video="+video+"&jsondata="+encodeURIComponent(jsondata), true);
+	   xhttp.open("GET", "add_data.php?state="+state+"&course="+course+"&user="+user+"&video="+video+"&jsondata="+encodeURIComponent(jsondata)+"&contextinstanceid="+contextinstanceid, true);
 	   xhttp.send();
   }
 </script>
