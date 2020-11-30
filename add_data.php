@@ -28,12 +28,12 @@
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');		
 	global $DB;		
-			$user=$_GET['user'];
-			$course=$_GET['course'];
-			$video=$_GET['video'];
-			$state=$_GET['state'];
-			$jsondata=$_GET['jsondata'];
-
+	$user=$_GET['user'];
+	$course=$_GET['course'];
+	$video=$_GET['video'];
+	$state=$_GET['state'];
+	$jsondata=$_GET['jsondata'];
+	$contextinstanceid=$_GET['contextinstanceid'];
 
 $record=new stdClass();
 $record->user=$user;
@@ -43,33 +43,74 @@ $temp='';
 
 switch($state){
 	case -1:
-		$temp='unstarted';
+		$temp='unstarted';//sin empezar
 		break;
 	case 0:
-		$temp='ended';
+		$temp='ended';//finalizado
 		break;
 	case 1:
-		$temp='playing';
+		$temp='playing';//en reproducción
 		break;
 	case 2:
-		$temp='paused';
+		$temp='paused';//en pausa
 		break;
 	case 3:
-		$temp='buffering';
+		$temp='buffering';//almacenando en búfer
 		break;
 		
-	case 4:
-		$temp='video cued';
+	case 5:
+		$temp='cued';//video en cola
 		break;
 	default:
-		$temp=$state;//'unrecognized state';
+		$temp='unrecognized';
 		break;
 	
 }
-$record->state=$state;
+$record->state=$temp;
 $record->time_occurred=date('Y-m-d H:i:s');
 $record->datos_json=$jsondata;
+
 $id=$DB->insert_record('youtube',$record,false);
-	
+
+$log_manual=new stdClass();
+$log_manual->other=$jsondata;
+$log_manual->eventname='\mod_vidtrack\event\course_module_viewed';
+$log_manual->component='mod_vidtrack';
+$log_manual->action='viewed';
+$log_manual->target='course_module';
+$log_manual->objecttable='vidtrack';
+$log_manual->objecttable='vidtrack';
+$log_manual->objectid=1;
+$log_manual->crud='r';
+$log_manual->edulevel=2;
+$log_manual->contextid=6504;
+$log_manual->contextlevel=70;
+$log_manual->contextinstanceid=1958;
+$log_manual->userid=$user;
+$log_manual->courseid=$course;
+
+//$id = optional_param('id',0,PARAM_INT);    // Course Module ID, or
+//$cm = get_coursemodule_from_instance('vidtrack', $course, 0, false, MUST_EXIST);
+$ctx = context_course::instance($course);
+$contextmodule = context_module::instance($contextinstanceid);
+if($contextinstanceid){
+	$record2 = (object) array(
+		 'edulevel' => 2,
+		 'contextid' => $ctx->id,
+		 'contextlevel' => $ctx->contextlevel,
+		 'contextinstanceid' => $contextinstanceid,
+		 'userid' => $user,
+		 'courseid' => $course, 
+		 'timecreated' => time(),
+		 'eventname' =>'\mod_vidtrack\event\course_module_viewed',
+		 'component' =>'mod_vidtrack',
+		 'action' => 'viewed',
+		 'target' =>'course_module',
+		 'objecttable' =>'vidtrack',
+		 'crud' => 'r',
+		 'other' => $jsondata.json_encode($contextmodule),
+	);
+	$DB->insert_record('logstore_standard_log', $record2);
+}
 
 ?>
